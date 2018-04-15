@@ -1,0 +1,23 @@
+{
+  "name": "anydoor",
+  "version": "1.0.0",
+  "description": "a tiny nodejs static resource web server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "supervisor --inspect-brk app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FlawlessPeerless/anydoor.git"
+  },
+  "author": "magic_su",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FlawlessPeerless/anydoor/issues"
+  },
+  "homepage": "https://github.com/FlawlessPeerless/anydoor#readme",
+  "dependencies": {
+    "chalk": "^2.3.2"
+  }
+}
