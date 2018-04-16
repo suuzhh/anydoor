@@ -13,6 +13,7 @@ const Handlebars = require('handlebars')
 const conf = require('../config/defaultConfig')
 const mime = require('./mime')
 const compress = require('./compress')
+const range = require('./range')
 
 //  美化异步回调
 const stat = promisify(fs.stat)
@@ -30,7 +31,14 @@ module.exports = async function (req, res, filePath) {
             res.statusCode = 200
             res.setHeader('Content-Type', contentType)
 
-            let rs = fs.createReadStream(filePath)
+            let rs
+            const { code, start, end } = range(stat.size, req, res)
+            if (code === 200) {
+                rs = fs.createReadStream(filePath)
+            } else {
+                rs = fs.createReadStream(filePath, {start, end})
+            }
+            
             if (filePath.match(conf.compress)) {
                 rs = compress(rs, req, res)
             }
