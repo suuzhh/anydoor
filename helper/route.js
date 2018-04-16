@@ -2,7 +2,7 @@
  * @Author: magic_su 
  * @Date: 2018-04-16 11:55:05 
  * @Last Modified by: magic_su
- * @Last Modified time: 2018-04-16 14:55:02
+ * @Last Modified time: 2018-04-16 15:27:46
  */
 
 
@@ -12,6 +12,7 @@ const promisify = require('util').promisify
 const Handlebars = require('handlebars')
 const conf = require('../config/defaultConfig')
 const mime = require('./mime')
+const compress = require('./compress')
 
 //  美化异步回调
 const stat = promisify(fs.stat)
@@ -28,7 +29,12 @@ module.exports = async function (req, res, filePath) {
             const contentType = `${mime(filePath)}; Charset=utf-8` 
             res.statusCode = 200
             res.setHeader('Content-Type', contentType)
-            fs.createReadStream(filePath).pipe(res)
+
+            let rs = fs.createReadStream(filePath)
+            if (filePath.match(conf.compress)) {
+                rs = compress(rs, req, res)
+            }
+            rs.pipe(res)
         } else if (stats.isDirectory()) {
             const files = await readdir(filePath)
             res.statusCode = 200
