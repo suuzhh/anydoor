@@ -58,4 +58,8 @@ typings/
 .env
 
 # vscode configuration
+<<<<<<< HEAD
 .vscode/
+=======
+.vscode
+>>>>>>> c23f3f63b04744ea3f3aa68cc52171cb372fd525
